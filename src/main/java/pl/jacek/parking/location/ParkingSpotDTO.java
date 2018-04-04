@@ -1,15 +1,14 @@
-package pl.jacek.parking.spot;
+package pl.jacek.parking.location;
 
-import pl.jacek.parking.vehicle.VehicleType;
 
 public class ParkingSpotDTO {
     private String name;
-    private VehicleType type;
+    private int type;
 
     private ParkingSpotDTO() {
     }
 
-    public ParkingSpotDTO(String name, VehicleType type) {
+    public ParkingSpotDTO(String name, int type) {
         this.name = name;
         this.type = type;
     }
@@ -18,7 +17,7 @@ public class ParkingSpotDTO {
         return name;
     }
 
-    public VehicleType getType() {
+    public int getType() {
         return type;
     }
 }
