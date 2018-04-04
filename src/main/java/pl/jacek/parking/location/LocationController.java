@@ -11,11 +11,13 @@ import java.util.UUID;
 @RestController
 @RequestMapping(path = "/api/locations")
 public class LocationController {
-    private LocationInMemoryDatabase repository;
+    private LocationQuery repository;
+    private final LocationService service;
 
     @Autowired
-    public LocationController(LocationInMemoryDatabase repository) {
+    public LocationController(final LocationQuery repository, final LocationService service) {
         this.repository = repository;
+        this.service = service;
     }
 
     @GetMapping(path = "/", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -25,8 +27,12 @@ public class LocationController {
 
     @PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void addLocation(@RequestBody LocationDTO locationDTO) {
-        final Location location = new Location(UUID.randomUUID(), locationDTO.getName(),
-                locationDTO.getStreetName(), locationDTO.getStreetNumber());
-        this.repository.save(location);
+        this.service.addLocation(locationDTO);
+    }
+
+
+    @PutMapping(path = "/{id}/spots", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void addPost(@PathVariable("id") LocationIdentifier locationIdentifier, @RequestBody ParkingSpotDTO dto) {
+        this.service.addSpot(locationIdentifier, dto);
     }
 }
